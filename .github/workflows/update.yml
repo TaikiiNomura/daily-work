@@ -1,0 +1,20 @@
+name: update progress
+
+on: [push]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: run script
+        run: python update_progress.py
+
+      - name: commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add progress.md
+          git commit -m "update progress" || echo "no change"
+          git push
